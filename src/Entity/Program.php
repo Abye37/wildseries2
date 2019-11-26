@@ -27,9 +27,10 @@ class Program
     private $summary;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $poster;
+    private $Category;
 
     public function getId(): ?int
     {
@@ -60,14 +61,14 @@ class Program
         return $this;
     }
 
-    public function getPoster(): ?string
+    public function getCategory(): ?Category
     {
-        return $this->poster;
+        return $this->Category;
     }
 
-    public function setPoster(?string $poster): self
+    public function setCategory(?Category $Category): self
     {
-        $this->poster = $poster;
+        $this->Category = $Category;
 
         return $this;
     }
