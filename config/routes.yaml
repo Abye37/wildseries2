@@ -2,10 +2,3 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-wild_show_index:
-  path: /wild/
-  controller: App\Controller\WildController::index
-
-wild_index:
-  path: /wild
-  controller: App\Controller\WildController::index
