@@ -51,4 +51,9 @@ class WildController extends AbstractController
             'categoryName' => ucwords($categoryName)
         ]);
     }
+
+    public function showByProgram()
+    {
+        
+    }
 }
