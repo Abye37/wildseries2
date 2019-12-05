@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class Program
      * @ORM\Column(type="text")
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\season", mappedBy="program")
+     */
+    private $season;
+
+    public function __construct()
+    {
+        $this->season = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,37 @@ class Program
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|season[]
+     */
+    public function getSeason(): Collection
+    {
+        return $this->season;
+    }
+
+    public function addSeason(season $season): self
+    {
+        if (!$this->season->contains($season)) {
+            $this->season[] = $season;
+            $season->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeason(season $season): self
+    {
+        if ($this->season->contains($season)) {
+            $this->season->removeElement($season);
+            // set the owning side to null (unless already changed)
+            if ($season->getProgram() === $this) {
+                $season->setProgram(null);
+            }
+        }
 
         return $this;
     }

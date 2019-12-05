@@ -39,6 +39,12 @@ class Season
      */
     private $episode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Program", inversedBy="season")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $program;
+
     public function __construct()
     {
         $this->episode = new ArrayCollection();
@@ -93,6 +99,18 @@ class Season
     public function setEpisode(?episode $episode): self
     {
         $this->episode = $episode;
+
+        return $this;
+    }
+
+    public function getProgram(): ?Program
+    {
+        return $this->program;
+    }
+
+    public function setProgram(?Program $program): self
+    {
+        $this->program = $program;
 
         return $this;
     }
