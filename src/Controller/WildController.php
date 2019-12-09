@@ -9,28 +9,35 @@ use App\Form\ProgramSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Episode;
 use App\Entity\Category;
+use App\Form\ProgramType;
 
 class WildController extends AbstractController
 {
     /**
      * @Route("/wild", name="wild_index")
      */
-    public function index(ProgramRepository $programRepository)
+    public function index(ProgramRepository $programRepository, Request $request)
     {
         $programs = $programRepository->findAll();
         if (!$programs) {
             throw $this->createNotFoundException('No program found in program\'s table.');
         }
 
-        $form = $this->createForm(
-            ProgramSearchType::class,
-            null,
-            ['method' => Request::METHOD_GET]
-        );
+        $form = $this->createForm(ProgramType::class); //creation du form et insertion dans une variable
+        $form->handleRequest($request);//signale que la valeur peut être manipulée
 
-    return $this->render('wild/index.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newProgram = $form->getData();//récupère les infos du form dans get data
+            $entityManager = $this->getDoctrine()->getManager();//permet utiliser flush
+            $entityManager->persist($newProgram);//selectionne les données a rentrer
+            $entityManager->flush();//rentre les données dans la bdd
+            dump($newProgram);
+        }
+    
+        return $this->render('wild/index.html.twig', [
         'programs' => $programs,
         'form' => $form->createView(),]);
+
 }
 
     /**
