@@ -5,6 +5,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\SeasonRepository;
+use App\Form\ProgramSearchType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Episode;
+use App\Entity\Category;
+
 class WildController extends AbstractController
 {
     /**
@@ -16,8 +21,18 @@ class WildController extends AbstractController
         if (!$programs) {
             throw $this->createNotFoundException('No program found in program\'s table.');
         }
-        return $this->render('wild/index.html.twig', ['programs' => $programs]);
-    }
+
+        $form = $this->createForm(
+            ProgramSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
+        );
+
+    return $this->render('wild/index.html.twig', [
+        'programs' => $programs,
+        'form' => $form->createView(),]);
+}
+
     /**
      * @Route("/wild/show/{slug<[a-z0-9-]+>}", defaults={"slug" = null}, name="wild_show")
      */
@@ -78,4 +93,6 @@ class WildController extends AbstractController
             'episodes' => $episodes
         ]);
     }
+
+
 }
