@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <h1>All TV shows: </h1>
     {% for program in programs %}
         <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Category: {{ program.category.name }}</h2>
+            <h2>
+                {{ loop.index }} / {{ program.title }} - Category: {{ program.category.name }}
+            </h2>
             <p>{{ program.synopsis }}</p>
         </div>
     {% else %}
@@ -13,9 +14,9 @@
     <a href="{{ path('app_index') }}">
         Back to home
     </a>
-{{ form_start(form) }}
-    {{ form_row(form.title) }}
-    <button type="submit" name="btnSearch">Rechercher</button>
-{{ form_end(form) }}
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        <button type="submit" name="btnSearch">Rechercher</button>
+    {{ form_end(form) }}
 
 {% endblock %}

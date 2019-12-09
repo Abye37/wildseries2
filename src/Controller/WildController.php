@@ -31,9 +31,7 @@ class WildController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();//permet utiliser flush
             $entityManager->persist($newProgram);//selectionne les données a rentrer
             $entityManager->flush();//rentre les données dans la bdd
-            dump($newProgram);
         }
-    
         return $this->render('wild/index.html.twig', [
         'programs' => $programs,
         'form' => $form->createView(),]);
