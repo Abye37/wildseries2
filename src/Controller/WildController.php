@@ -9,6 +9,7 @@ use App\Form\ProgramSearchType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Episode;
 use App\Entity\Category;
+use App\Entity\Actor;
 use App\Form\ProgramType;
 
 class WildController extends AbstractController
