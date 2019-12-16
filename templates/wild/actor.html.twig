@@ -2,11 +2,13 @@
 
 {% block body %}
     <strong>Acteur :</strong> {{ actor.name }}
-<ul>
-    {% for program in actor.programs %}
-        <li>{{ program.title }}</li>
-    {% else %}
-        <li>Aucun programme pour cet acteur</li>
-    {% endfor %}
-</ul>
+    <ul>
+        {% for program in actor.programs %}
+        <a href="{{ path('show_program', {'programName': hyphenizedProgamTitles[loop.index - 1] }) }}">
+            <li>{{ program.title }}</li>
+        </a>
+        {% else %}
+            <li>Aucun programme pour cet acteur</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

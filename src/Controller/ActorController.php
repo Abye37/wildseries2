@@ -16,8 +16,13 @@ class ActorController extends AbstractController
     public function showByActor(int $actorId, ActorRepository $actorRepository, ProgramRepository $programRepository):Response
     {
         $actor = $actorRepository->findOneById($actorId);
+        $hyphenizedProgamTitles = [];
+        foreach($actor->getPrograms() as $program) {
+            $hyphenizedProgamTitles[] = strtolower(str_replace(' ', '-', $program->getTitle()));
+        }
         return $this->render('wild/actor.html.twig', [
             'actor' => $actor,
+            'hyphenizedProgamTitles' => $hyphenizedProgamTitles
         ]);
     }
 }
