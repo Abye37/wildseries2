@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Program;
-use App\Form\Program1Type;
+use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class ProgramController extends AbstractController
     public function new(Request $request): Response
     {
         $program = new Program();
-        $form = $this->createForm(Program1Type::class, $program);
+        $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class ProgramController extends AbstractController
      */
     public function edit(Request $request, Program $program): Response
     {
-        $form = $this->createForm(Program1Type::class, $program);
+        $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
