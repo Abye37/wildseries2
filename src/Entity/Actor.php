@@ -22,6 +22,11 @@ class Actor
      * @ORM\ManyToMany(targetEntity="App\Entity\Program", inversedBy="actors")
      */
     private $programs;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
     public function __construct()
     {
         $this->programs = new ArrayCollection();
@@ -58,6 +63,18 @@ class Actor
         if ($this->programs->contains($program)) {
             $this->programs->removeElement($program);
         }
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
         return $this;
     }
 }
