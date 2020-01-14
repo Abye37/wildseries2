@@ -6,6 +6,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
+use App\Service\Slugify;
+
 class ActorFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
