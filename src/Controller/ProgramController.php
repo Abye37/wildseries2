@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use App\Service\Slugify;
 use App\Entity\Program;
 use App\Form\ProgramType;
@@ -29,7 +31,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -39,10 +41,20 @@ class ProgramController extends AbstractController
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
             $entityManager = $this->getDoctrine()->getManager();
+            $email = (new Email())
+            ->from('liberauita@gmail.com')
+            ->to('918086f8ca-b0a079@inbox.mailtrap.io')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Une nouvelle série vient d\'être publiée !')
+            ->html('<p>Une nouvelle série vient d\'être publiée sur Wild Séries !</p>');
+            $mailer->send($email);
             $entityManager->persist($program);
-
             $entityManager->flush();
-
+            
             return $this->redirectToRoute('program_index');
         }
 
